@@ -1,0 +1,58 @@
+
+### Zapojování
+
+## 1. Přípravy platforem
+
+### a) Raspberry Pi 3
+Díky tomu, že máme nejlepší možné Raspberry Pi, tak jeho příprava šla poměrně snadno, pro prvotní nastavení jsme připojili raspberry k monitoru a k němu ještě klávesnici+myš, systém byl již přiložen na SD kartě, tudíž jsme jen provedli nutné aktualizace a nastavili Raspberry Wi-Fi síť. Následně jsme také přidali programy pro vzdálené ovládání a také pro psaní samostatných programů v námi zvoleném Javascriptu. Obraz celé sd karty jsme si pro jistotu zálohovali, kdyby se něco neočekávaného stalo a my potřebovali čistý systém, kam by jsme jen přidali samostatně zálohované kódy.
+### b) Arudino Pro Micro
+U arduina, pro to abychom s ním mohli nadále pracovat a připojovat se senzory jsme připájeli 2 řady pinů a připravili si na počítači Arduino IDE. U arduina je velice výhodná malinká velikost, tudíž se vleze prakticky kamkoliv. 
+
+U Raspberry i Arduina jsme neustále využívali také obrázky pin layoutu.
+
+## 2. Testování GPIO u Raspberry
+
+### a) b) c) LED / bzučák
+Začali jsme s jednoduchým testováním GPIO portů a jejich ovládáním. Jako první jsme začali s LED diodou, kterou jsme zapojili do nepájivého pole a do odpovídajících zdířek jsme z gpio portu vyvedli vodič k katodě a k výstupu přidali 330 Ohmový rezistor, od kterého vedli vodič zpátky k Raspberry k pinu GND. To samé jsme zopakovali s bzučákem, u kterého odpadla nutnost přidávat rezistor. 
+### d) port- vstupní režim
+Pro připojení jsme zvolili Switch, u kterého při přepnutí se vypsal text v konzoli. Připojení opět bylo velice jednoduché - vyvedení z GPIO portu do switche a ze switche zpátky na GND.
+
+## 3. Oled, rotační encoder a senzory tlaku a teploty
+
+### a) Oled
+Displej je připojený přes sběrnici I2C (která je vhodná pro periferie, které nepotřebují velikou rychlost přenosu). 
+### b) Senzor tlaku BMP180
+
+### c) Senzor teploty DALLAS 18B20
+Teplotní senzor je připojen dle rozdělení pinů. Vcc (+) se dělí o 3v3 napájecí port na Rpi s rotary encoderem, kousek za napájecím portem je také zapojen rezistor, který vede k portu na data a vše je to zakončeno vývodem GND, který je zapojen do jednoho z GND portů na Rpi.
+
+### d) -
+### e) Rotary encoder
+Rotary encoder jsme připojili tak jak jsou udány porty na něm samotném. Všechny porty co z něj vedou končí v Rpi, až na napájecí port, který je vyveden z nepájivého pole a dělí se o napájení s teplotním senzorem. 
+CLK a DT určují strany a SW by měl indikovat zmáčknutí.
+
+## 5. Analogové vstupy na Arduinu
+Všechny senzory jsou připojeny na nepájivém poli (obr.1), + a - jsou zprostředkovány přes samotné přídavné USB napájení, které je v nepájivém poli a z dalších zdířek následně vede napájení samostatně do LED pásku a zbytek do řady pro napájení ostatních senzorů, napojených v řadě. 
+
+### a) Potenciometr 10K 
+Senzor jsme připojili na předem určených portech, + a - vyvedeny z řady, bez potřeby rezistoru a prostřední vývod, který vede přímo do arduina na zvolený port.
+### b) Fotorezistor
+Senzor je připojen jednou nožičkou v řadě, kudy vede GND z přídavného napájení a vedle je vyveden rezistor, který vede k vodiči, který vede do analogového portu Arduina.
+### c) Čidlo teploty
+Termistor je připojen stejně jako Fotorezistor. 
+
+## 6. Led + rotary
+
+### a) LED strip
+Jak bylo zmíněno, led pásek má samostatné připojení od přídavného napájení, připojeného v nepájivém poli a pouze jeden pin je připojen to pinu na Arduinu,
+### b) Rotary encoder
+Rotační enkoder, je připojen velice jednoduše. VCC A GND jsou opět vyvedeny z řady přídavného napájení a piny pro informace o točení doprava, doleva jsou napojeny na vývody na Arduinu.
+
+### 7. Zabezpečovací prvky
+### a) b) Otřešové & polohové čidlo
+Čidla jsou zapojeny naprosto stejně, jako všechny ostatní a jejich výstupy připojeny do řady kam směřují nožičky Arduina v nepájivém poli.
+### c) PIR čidlo 
+Senzor pohybu má již předem zadané piny, tudíž se opět opakovalo zapojení VCC A GND a zbývající pin byl připojen k Arduinu
+
+           
+
